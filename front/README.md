@@ -25,8 +25,7 @@ devDependencies
 - pages - 서비스 페이지
 - components - 자잘한 컴포넌트
 - layouts - 공통 레이아웃
-
-
+- typings
 
 ## index.html이 필수인 이유
 
