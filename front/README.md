@@ -25,7 +25,7 @@ devDependencies
 - pages - 서비스 페이지
 - components - 자잘한 컴포넌트
 - layouts - 공통 레이아웃
-- typings
+- typings - api의 타입을 지정하는 interface를 저장하기 위한 폴더
 
 ## index.html이 필수인 이유
 
