@@ -31,3 +31,9 @@ devDependencies
 
 구글의 권장사항에 index.html은 필수적으로 검색엔진이 확인하는 곳이므로 index.html 페이지가 존재해야 한다고 명시하고 있다.
 
+## elinstrc
+
+## prettierrc
+
+
+
