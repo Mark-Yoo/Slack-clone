@@ -35,5 +35,6 @@ devDependencies
 
 ## prettierrc
 
+## tsconfig
 
-
+- path를 미리 설정해서 복잡한 폴더구조에서도 상대경로를 직접 찾아 입력해주는 번거로운 코드 작성을 최대한 배제해주는 것이 권장된다.
