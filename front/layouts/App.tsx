@@ -1,7 +1,23 @@
 import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+// page 단위의 code splitting을 위한 loadable
+import loadable from '@loadable/component';
+// import LogIn from '@pages/LogIn';
+// import SignUp from '@pages/SignUp';
+
+// loadable에 콜백으로 전달
+const LogIn = loadable(() => import('@pages/LogIn'));
+const SignUp = loadable(() => import('@pages/SignUp'));
 
 const App = () => {
-  return <div>제작중입니다 ㅠㅠ</div>;
-}
+  return (
+    <Switch>
+      <Redirect exact path="/" to="login" />
+      <Route path="/login" component={LogIn} />
+      <Route path="/signup" component={SignUp} />
+    </Switch>
+  );
+};
 
 export default App;
