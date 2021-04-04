@@ -38,3 +38,15 @@ devDependencies
 ## tsconfig
 
 - path를 미리 설정해서 복잡한 폴더구조에서도 상대경로를 직접 찾아 입력해주는 번거로운 코드 작성을 최대한 배제해주는 것이 권장된다.
+
+## react-router-dom
+
+```react
+import { Switch, Route, Redirect } from 'react-router-dom';
+```
+
+- `Switch`를 사용하면 Route가 가능한 경₩로 중 하나만 선택하는 기능을 제공하므로 `Switch`를 사용하면 Route 경로 중 하나만 화면에 띄워준다.
+
+## Webpack
+
+- 현재 사용하고 있는 방식은 로컬에서만 가능한 방식이므로 이후에 개발 단계에서는 백엔드 분들과 협력할것
