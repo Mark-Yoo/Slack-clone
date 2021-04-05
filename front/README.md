@@ -50,3 +50,4 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 ## Webpack
 
 - 현재 사용하고 있는 방식은 로컬에서만 가능한 방식이므로 이후에 개발 단계에서는 백엔드 분들과 협력할것
+- 
