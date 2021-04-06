@@ -45,7 +45,13 @@ devDependencies
 import { Switch, Route, Redirect } from 'react-router-dom';
 ```
 
-- `Switch`를 사용하면 Route가 가능한 경₩로 중 하나만 선택하는 기능을 제공하므로 `Switch`를 사용하면 Route 경로 중 하나만 화면에 띄워준다.
+- `Switch`를 사용하면 Route가 가능한 경로 중 하나만 선택하는 기능을 제공하므로 `Switch`를 사용하면 Route 경로 중 하나만 화면에 띄워준다.
+
+```React
+import { Link } from 'react-router-dom';
+```
+
+- React-router-dom의 Link의 사용을 더 권장하는 이유는 a 태그는 새로고침을 하는 반면 Link는 새로고침 없이 필요부분만을 바꿔주기 때문이다.
 
 ## Webpack
 
