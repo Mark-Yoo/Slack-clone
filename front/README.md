@@ -59,4 +59,16 @@ import { Link } from 'react-router-dom';
 
 ## SWR
 
-- 상태를 관리하기 위해서 redux 대신 사용할 라이브러리
+- 상태를 관리하기 위해서 redux 대신 사용할 라이브러리 (GET 특화)
+- 로그인이 되어있는 경우를 가정할 때에 어디서든 로그인이 되어있는지를 확인하는 API를 사용한다. 이 때에 SWR은 화면이 전환될 때마다 새로 GET을 해오기 때문에 채팅처럼 상태가 수시로 변하는 경우에 매우 유용하다.
+- 프론트와 백의 주소가 다를 경우 백에서는 쿠키를 보내줄 수 없다. 
+
+```react
+import useSWR from 'swr';
+
+// revalidate 함수를 사용하면 revalidate 될 때마다 호출할 수 있다.
+// dedupingInterval을 사용하면 주기적으로 호출하지만 해당 기간동안은 캐시에서만 불러오는 방식으로 사용할 수 있다.
+const { data, error, revalidate } = useSWR('http://api주소', fetcher함수, {dedupingInterval: 10000})
+
+```
+
