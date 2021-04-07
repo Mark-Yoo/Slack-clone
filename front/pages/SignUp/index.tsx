@@ -1,10 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import useInput from '@hooks/useInput';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import useSWR from 'swr';
+import { Link, Redirect } from 'react-router-dom';
+import fetcher from '@utils/fetcher';
 import { Success, Form, Error, Label, Input, LinkContainer, Button, Header } from './styles';
 
 const SignUp = () => {
+  const { data, error, revalidate } = useSWR('http://localhost:3095/api/users', fetcher);
+
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, , setPassword] = useInput('');
@@ -39,7 +43,7 @@ const SignUp = () => {
         setSignUpSuccess(false);
         setSignUpError('');
         axios
-          .post('/api/users', {
+          .post('http://localhost:3095/api/users', {
             email,
             nickname,
             password,
@@ -58,6 +62,9 @@ const SignUp = () => {
     [email, nickname, password, passwordCheck, mismatchError],
   );
 
+  if (data) {
+    return <Redirect to="workspace/channel" />;
+  }
   return (
     <div id="container">
       <Header>Slack in ReactTS</Header>
