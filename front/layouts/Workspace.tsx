@@ -2,6 +2,7 @@ import React, { useCallback, FC } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import fetcher from '@utils/fetcher';
+import { Redirect } from 'react-router';
 
 const Workspace: FC = ({ children }) => {
   const { data, error, revalidate } = useSWR('http://localhost:3095/api/users', fetcher);
@@ -15,7 +16,17 @@ const Workspace: FC = ({ children }) => {
         revalidate();
       });
   }, []);
-  return <button onClick={onLogout}>로그아웃</button>;
+
+  if (!data) {
+    return <Redirect to="/login" />;
+  }
+
+  return (
+    <div>
+      <button onClick={onLogout}>로그아웃</button>
+      {children}
+    </div>
+  );
 };
 
 export default Workspace;
