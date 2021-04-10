@@ -15,6 +15,8 @@ import {
   Workspaces,
   WorkspaceName,
   WorkspaceWrapper,
+  ProfileModal,
+  LogOutButton,
 } from '@layouts/Workspace/styles';
 import Menu from '@components/Menu';
 
@@ -53,13 +55,19 @@ const Workspace: FC = ({ children }) => {
             <ProfileImg src={gravatar.url(data.email, { s: '28px', d: 'retro' })} alt={data.email} />
             {showUserMenu && (
               <Menu style={{ right: 0, top: 38 }} show={showUserMenu} onCloseModal={onClickUserProfile}>
-                프로필 메뉴
+                <ProfileModal>
+                  <img src={gravatar.url(data.email, { s: '36px', d: 'retro' })} alt={data.email} />
+                  <div>
+                    <span id="profile-name">{data.email}</span>
+                    <span id="profile-active">Active</span>
+                  </div>
+                </ProfileModal>
+                <LogOutButton onClick={onLogout}>로그아웃</LogOutButton>
               </Menu>
             )}
           </span>
         </RightMenu>
       </Header>
-      <button onClick={onLogout}>로그아웃</button>
       <WorkspaceWrapper>
         <Workspaces>workspace</Workspaces>
         <Channels>
