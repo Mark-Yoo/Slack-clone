@@ -1,11 +1,22 @@
-import React, { VFC } from 'react';
-import Workspace from '@layouts/Workspace';
+import React, { FC, useCallback } from 'react';
+import ChatList from '@components/ChatList';
+import ChatBox from '@components/ChatBox';
+import useInput from '@hooks/useInput';
+import { Header, Container } from '@pages/Channel/styles';
 
-const Channel: VFC = () => {
+const Channel: FC = () => {
+  const [chat, onChangeChat] = useInput('');
+
+  const onSubmitForm = useCallback((e) => {
+    e.preventDefault();
+  }, []);
+
   return (
-    <Workspace>
-      <div>로그인되었습니다!</div>
-    </Workspace>
+    <Container>
+      <Header>Channel</Header>
+      <ChatList />
+      <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
+    </Container>
   );
 };
 
