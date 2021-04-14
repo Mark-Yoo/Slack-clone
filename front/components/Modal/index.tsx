@@ -3,7 +3,7 @@ import { CreateModal, CloseModalButton } from '@components/Modal/styles';
 
 interface Props {
   show: boolean;
-  onCloseModal: () => void;
+  onCloseModal: (e: any) => void;
 }
 const Modal: FC<Props> = ({ show, children, onCloseModal }) => {
   const stopPropagation = useCallback((e) => {
