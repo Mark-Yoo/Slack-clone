@@ -22,7 +22,7 @@ const InviteChannelModal: FC<Props> = ({ show, onCloseModal, setShowInviteChanne
 
   const { data: userData } = useSWR<IUser>(`/api/users`, fetcher);
   const { revalidate: revalidateMember } = useSWR<IUser[]>(
-    userData ? `/api/workspaces/${workspace}/channels/${channel}/members` : null,
+    userData && channel ? `/api/workspaces/${workspace}/channels/${channel}/members` : null,
     fetcher,
   );
 
