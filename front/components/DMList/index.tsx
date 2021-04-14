@@ -6,16 +6,15 @@ import { CollapseButton } from '@components/DMList/styles';
 import fetcher from '@utils/fetcher';
 import { IDM, IUser, IUserWithOnline } from '@typings/db';
 
-interface Props {
-  userData?: IUser;
-}
-
-const DMList: FC<Props> = ({ userData }) => {
+const DMList: FC = () => {
   const [channelCollapse, setChannelCollapse] = useState(false);
   const [countList, setCountList] = useState<{ [key: string]: number }>({});
   const [onlineList, setOnlineList] = useState<number[]>([]);
 
   const { workspace } = useParams<{ workspace?: string }>();
+  const { data: userData, error, revalidate, mutate } = useSWR<IUser>(`/api/uswers`, fetcher, {
+    dedupingInterval: 2000,
+  });
   const { data: memberData } = useSWR<IUserWithOnline[]>(
     userData ? `/api/workspaces/${workspace}/members` : null,
     fetcher,
