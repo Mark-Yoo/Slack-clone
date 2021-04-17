@@ -78,10 +78,10 @@ const config: webpack.Configuration = {
     publicPath: '/dist/',
     proxy: {
       // CORS 문제 (포트가 달라 origin을 다르다고 보고 에러를 발생하는 경우)를 해결하기 위해 프론트에서 사용할 수 있는 설정
-      // '/api/': {
-      //   target: 'http://localhost:3095',
-      //   changeOrigin: true,
-      // },
+      '/api/': {
+        target: 'http://localhost:3095',
+        changeOrigin: true,
+      },
     },
   },
 };
