@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, FC } from 'react';
+import React, { useCallback, useState, useEffect, VFC } from 'react';
 import useSWR from 'swr';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { CollapseButton } from '@components/DMList/styles';
 import fetcher from '@utils/fetcher';
 import { IDM, IUser, IUserWithOnline } from '@typings/db';
 
-const DMList: FC = () => {
+const DMList: VFC = () => {
   const [channelCollapse, setChannelCollapse] = useState(false);
   const [countList, setCountList] = useState<{ [key: string]: number }>({});
   const [onlineList, setOnlineList] = useState<number[]>([]);
