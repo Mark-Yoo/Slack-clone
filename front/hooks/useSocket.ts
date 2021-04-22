@@ -12,20 +12,27 @@ const useSocket = (workspace?: string): [SocketIOClient.Socket | undefined, () =
       delete sockets[workspace];
     }
   }, [workspace]);
+
   if (!workspace) {
     return [undefined, disconnect];
   }
-  sockets[workspace] = io.connect(`${backUrl}/ws-${workspace}`);
-  sockets[workspace].emit('hello', 'world');
-  sockets[workspace].on('message', (data) => {
-    console.log(data);
-  });
-  sockets[workspace].on('data', (data) => {
-    console.log(data);
-  });
-  sockets[workspace].on('onlineList', (data) => {
-    console.log(data);
-  });
+
+  if (!sockets[workspace]) {
+    sockets[workspace] = io.connect(`${backUrl}/ws-${workspace}`, {
+      transports: ['websocket'],
+    });
+  }
+
+  // sockets[workspace].emit('hello', 'world');
+  // sockets[workspace].on('message', (data) => {
+  //   console.log(data);
+  // });
+  // sockets[workspace].on('data', (data) => {
+  //   console.log(data);
+  // });
+  // sockets[workspace].on('onlineList', (data) => {
+  //   console.log(data);
+  // });
 
   return [sockets[workspace], disconnect];
 };
