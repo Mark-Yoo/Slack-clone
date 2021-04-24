@@ -68,7 +68,23 @@ import useSWR from 'swr';
 
 // revalidate 함수를 사용하면 revalidate 될 때마다 호출할 수 있다.
 // dedupingInterval을 사용하면 주기적으로 호출하지만 해당 기간동안은 캐시에서만 불러오는 방식으로 사용할 수 있다.
-const { data, error, revalidate } = useSWR('http://api주소', fetcher함수, {dedupingInterval: 10000})
+// mutate는 revalidate와 달리 서버에 다시 요청을 보내지 않고 가지고 있는 response.data를 data에 넣어준다.
+
+const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher함수, {dedupingInterval: 10000})
+	.then((response) => {
+    mutate(response.data);
+    // revalidate();
+  });
 
 ```
 
+## Gravatar
+
+- 계정당 아바타를 생성하기 위한 라이브러리
+
+## WebSocket
+
+- 서버와 실시간으로 데이터를 양방향으로 통신할 수 있도록 만든 라이브러리
+- 이전까지는 폴링을 사용하여 통신
+- Websocket은 기본적으로 React에서 전역적인 특징을 가지는데 이 때문에 컴포넌트가 전환될 때에 연결이 끊어질수도 있으므로 이를 hook으로 만들어 활용
+- 구형 브라우저에서 가끔 소켓이 없는 경우가 있으나 보통 최신 브라우저들은 소켓을 가지고 있으므로 폴링을 건너뛰고 바로 웹소켓을 사용하도록 설정하는 것도 가능
