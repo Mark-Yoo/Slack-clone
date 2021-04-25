@@ -17,7 +17,7 @@ const DirectMessage: FC = () => {
   const { data: userData, error, revalidate, mutate } = useSWR(`/api/workspaces/${workspace}/users/${id}`, fetcher);
   const { data: myData } = useSWR(`/api/users`, fetcher);
   const { data: chatData, mutate: mutateChat, revalidate: revalidateChat } = useSWR<IDM[]>(
-    `api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=1`,
+    `/api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=1`,
     fetcher,
   );
 
