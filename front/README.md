@@ -88,3 +88,9 @@ const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher�
 - 이전까지는 폴링을 사용하여 통신
 - Websocket은 기본적으로 React에서 전역적인 특징을 가지는데 이 때문에 컴포넌트가 전환될 때에 연결이 끊어질수도 있으므로 이를 hook으로 만들어 활용
 - 구형 브라우저에서 가끔 소켓이 없는 경우가 있으나 보통 최신 브라우저들은 소켓을 가지고 있으므로 폴링을 건너뛰고 바로 웹소켓을 사용하도록 설정하는 것도 가능
+- Socket.io는 websocket에서 지원하지 않는 buffer를 지원해주어 연결이 되지 않아 데이터가 전송되지 않는 상태더라도 데이터를 저장해주는 기능도 지원한다.
+
+## react-custom-scrollbars
+
+- 커스텀 스크롤바를 지원해주는 라이브러리
+- div 태그와 같이 wrapper 역할을 해줄 수 있음
