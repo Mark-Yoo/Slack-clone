@@ -1,8 +1,10 @@
 import React, { VFC } from 'react';
 import gravatar from 'gravatar';
+import dayjs from 'dayjs';
+import regexifyString from 'regexify-string';
 import { IDM } from '@typings/db';
 import { ChatWrapper } from '@components/Chat/styles';
-import dayjs from 'dayjs';
+import { Link, useParams } from 'react-router-dom';
 
 interface Props {
   key: Number;
@@ -10,7 +12,26 @@ interface Props {
 }
 
 const Chat: VFC<Props> = ({ key, data }) => {
+  const { workspace } = useParams<{ workspace: string; channel: string }>();
   const user = data.Sender;
+
+  // \d 는 숫자 +는 1개 이상, ?는 0개 혹은 1개, *은 0개 이상
+  const result = regexifyString({
+    input: data.content,
+    pattern: /@\[(.+?)]\((\d+?)\)|\n/g,
+    decorator(match: string, index: number) {
+      const arr: string[] | null = match.match(/@\[(.+?)]\((\d+?)\)/)!;
+      if (arr) {
+        return (
+          <Link key={match + index} to={`/workspaces/${workspace}/dm/${arr[2]}`}>
+            @{arr[1]}
+          </Link>
+        );
+      }
+      return <br key={index} />;
+    },
+  });
+
   return (
     <ChatWrapper>
       <div className="chat-img">
@@ -20,7 +41,7 @@ const Chat: VFC<Props> = ({ key, data }) => {
         <div className="chat-user">
           <b>{user.nickname}</b>
           <span>{dayjs(data.createdAt).format('h:mm A')}</span>
-          <p>{data.content}</p>
+          <p>{result}</p>
         </div>
       </div>
     </ChatWrapper>
