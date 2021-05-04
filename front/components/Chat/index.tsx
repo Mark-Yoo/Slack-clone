@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { VFC, memo, useMemo } from 'react';
 import gravatar from 'gravatar';
 import dayjs from 'dayjs';
 import regexifyString from 'regexify-string';
@@ -16,21 +16,25 @@ const Chat: VFC<Props> = ({ key, data }) => {
   const user = data.Sender;
 
   // \d 는 숫자 +는 1개 이상, ?는 0개 혹은 1개, *은 0개 이상
-  const result = regexifyString({
-    input: data.content,
-    pattern: /@\[(.+?)]\((\d+?)\)|\n/g,
-    decorator(match: string, index: number) {
-      const arr: string[] | null = match.match(/@\[(.+?)]\((\d+?)\)/)!;
-      if (arr) {
-        return (
-          <Link key={match + index} to={`/workspaces/${workspace}/dm/${arr[2]}`}>
-            @{arr[1]}
-          </Link>
-        );
-      }
-      return <br key={index} />;
-    },
-  });
+  const result = useMemo(
+    () =>
+      regexifyString({
+        input: data.content,
+        pattern: /@\[(.+?)]\((\d+?)\)|\n/g,
+        decorator(match: string, index: number) {
+          const arr: string[] | null = match.match(/@\[(.+?)]\((\d+?)\)/)!;
+          if (arr) {
+            return (
+              <Link key={match + index} to={`/workspace/${workspace}/dm/${arr[2]}`}>
+                @{arr[1]}
+              </Link>
+            );
+          }
+          return <br key={index} />;
+        },
+      }),
+    [data.content],
+  );
 
   return (
     <ChatWrapper>
@@ -48,4 +52,4 @@ const Chat: VFC<Props> = ({ key, data }) => {
   );
 };
 
-export default Chat;
+export default memo(Chat);
