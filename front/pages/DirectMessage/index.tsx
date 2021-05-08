@@ -9,6 +9,7 @@ import { Container, Header } from '@pages/DirectMessage/styles';
 import useInput from '@hooks/useInput';
 import axios from 'axios';
 import { IDM } from '@typings/db';
+import makeSection from '@utils/makesection';
 
 const DirectMessage: FC = () => {
   const [chat, onChangeChat, setChat] = useInput('');
@@ -41,9 +42,11 @@ const DirectMessage: FC = () => {
     [chat],
   );
 
-  if (!userData) {
+  if (!userData || !myData) {
     return null;
   }
+
+  const chatSections = makeSection(chatData ? [...chatData]?.reverse() : []);
 
   return (
     <Container>
@@ -51,7 +54,7 @@ const DirectMessage: FC = () => {
         <img src={gravatar.url(userData.email, { s: '24px', d: 'retro' })} alt={userData.nickname} />
         {userData.nickname}
       </Header>
-      <ChatList chatData={chatData} />
+      <ChatList chatSections={chatSections} />
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
     </Container>
   );
