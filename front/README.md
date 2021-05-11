@@ -94,3 +94,7 @@ const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher�
 
 - 커스텀 스크롤바를 지원해주는 라이브러리
 - div 태그와 같이 wrapper 역할을 해줄 수 있음
+
+## Day.js
+
+- Moment.js 보다 가볍고 리액트의 기본 모토인 불변성을 지켜주므로 최근 핫한 라이브러리
