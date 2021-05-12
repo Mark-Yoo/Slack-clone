@@ -10,7 +10,11 @@ interface Props {
 
 const ChatList: VFC<Props> = ({ chatSections }) => {
   const scrollbarRef = useRef(null);
-  const onScroll = useCallback(() => {}, []);
+  const onScroll = useCallback((values) => {
+    if (values.scrollTop === 0) {
+      console.log('가장 위');
+    }
+  }, []);
 
   return (
     <ChatZone>
