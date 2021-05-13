@@ -61,7 +61,7 @@ import { Link } from 'react-router-dom';
 
 - 상태를 관리하기 위해서 redux 대신 사용할 라이브러리 (GET 특화)
 - 로그인이 되어있는 경우를 가정할 때에 어디서든 로그인이 되어있는지를 확인하는 API를 사용한다. 이 때에 SWR은 화면이 전환될 때마다 새로 GET을 해오기 때문에 채팅처럼 상태가 수시로 변하는 경우에 매우 유용하다.
-- 프론트와 백의 주소가 다를 경우 백에서는 쿠키를 보내줄 수 없다. 
+- 프론트와 백의 주소가 다를 경우 백에서는 쿠키를 보내줄 수 없다.
 
 ```react
 import useSWR from 'swr';
@@ -98,3 +98,4 @@ const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher�
 ## Day.js
 
 - Moment.js 보다 가볍고 리액트의 기본 모토인 불변성을 지켜주므로 최근 핫한 라이브러리
+-
