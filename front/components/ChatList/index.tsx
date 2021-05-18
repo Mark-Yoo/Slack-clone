@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, VFC } from 'react';
+import React, { useCallback, forwardRef, VFC } from 'react';
 import Chat from '@components/Chat';
 import { ChatZone, Section, StickyHeader } from '@components/ChatList/styles';
 import { IDM } from '@typings/db';
@@ -8,17 +8,18 @@ interface Props {
   chatSections: { [key: string]: IDM[] };
 }
 
-const ChatList: VFC<Props> = ({ chatSections }) => {
-  const scrollbarRef = useRef(null);
+const ChatList: VFC<Props> = forwardRef<Scrollbars, Props>(({ chatSections }, ref) => {
+  // scrollbarRef를 DirectMessage 혹은 Channel 쪽에 있는것이 스크롤의 기준을 잡는 것이 적당해보임
   const onScroll = useCallback((values) => {
     if (values.scrollTop === 0) {
       console.log('가장 위');
+      // 데이터 추가 로딩
     }
   }, []);
 
   return (
     <ChatZone>
-      <Scrollbars autoHide ref={scrollbarRef} onScrollFrame={onScroll}>
+      <Scrollbars autoHide ref={ref} onScrollFrame={onScroll}>
         {Object.entries(chatSections).map(([date, chats]) => {
           return (
             <Section className={`section-${date}`} key={date}>
@@ -34,6 +35,6 @@ const ChatList: VFC<Props> = ({ chatSections }) => {
       </Scrollbars>
     </ChatZone>
   );
-};
+});
 
 export default ChatList;
