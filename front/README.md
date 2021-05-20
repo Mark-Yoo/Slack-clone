@@ -102,3 +102,5 @@ const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher�
 ## forwardRef
 
 - forwardRef를 사용하면 다른 ref를 전달하여 다른 컴포넌트에서 사용하도록 할 수 있음
+
+- 일반 ref로도 가능
