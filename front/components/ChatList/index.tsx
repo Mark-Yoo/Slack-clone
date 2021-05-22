@@ -8,7 +8,7 @@ interface Props {
   chatSections: { [key: string]: IDM[] };
 }
 
-const ChatList: VFC<Props> = forwardRef<Scrollbars, Props>(({ chatSections }, ref) => {
+const ChatList = forwardRef<Scrollbars, Props>(({ chatSections }, ref) => {
   // scrollbarRef를 DirectMessage 혹은 Channel 쪽에 있는것이 스크롤의 기준을 잡는 것이 적당해보임
   const onScroll = useCallback((values) => {
     if (values.scrollTop === 0) {
