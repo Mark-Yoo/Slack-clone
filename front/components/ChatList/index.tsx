@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 interface Props {
   chatSections: { [key: string]: IDM[] };
-  setSize: (index: number) => void;
+  setSize: (f: (size: number) => number) => Promise<IDM[][] | undefined>;
   isEmpty: boolean;
   isReachingEnd: boolean | undefined;
 }
@@ -14,9 +14,10 @@ interface Props {
 const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isEmpty, isReachingEnd }, ref) => {
   // scrollbarRef를 DirectMessage 혹은 Channel 쪽에 있는것이 스크롤의 기준을 잡는 것이 적당해보임
   const onScroll = useCallback((values) => {
-    if (values.scrollTop === 0) {
+    if (values.scrollTop === !isReachingEnd) {
       console.log('가장 위');
       // 데이터 추가 로딩
+      setSize((prevSize) => prevSize + 1).then(() => {});
     }
   }, []);
 
