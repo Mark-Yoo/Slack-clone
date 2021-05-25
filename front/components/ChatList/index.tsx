@@ -6,9 +6,12 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 interface Props {
   chatSections: { [key: string]: IDM[] };
+  setSize: (index: number) => void;
+  isEmpty: boolean;
+  isReachingEnd: boolean | undefined;
 }
 
-const ChatList = forwardRef<Scrollbars, Props>(({ chatSections }, ref) => {
+const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isEmpty, isReachingEnd }, ref) => {
   // scrollbarRef를 DirectMessage 혹은 Channel 쪽에 있는것이 스크롤의 기준을 잡는 것이 적당해보임
   const onScroll = useCallback((values) => {
     if (values.scrollTop === 0) {
