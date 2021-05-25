@@ -8,7 +8,7 @@ interface Props {
   chatSections: { [key: string]: IDM[] };
   setSize: (f: (size: number) => number) => Promise<IDM[][] | undefined>;
   isEmpty: boolean;
-  isReachingEnd: boolean | undefined;
+  isReachingEnd: boolean;
 }
 
 const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isEmpty, isReachingEnd }, ref) => {
