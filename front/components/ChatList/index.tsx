@@ -11,19 +11,22 @@ interface Props {
   isReachingEnd: boolean;
 }
 
-const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isEmpty, isReachingEnd }, ref) => {
+const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isReachingEnd }, scrollRef) => {
   // scrollbarRef를 DirectMessage 혹은 Channel 쪽에 있는것이 스크롤의 기준을 잡는 것이 적당해보임
-  const onScroll = useCallback((values) => {
-    if (values.scrollTop === !isReachingEnd) {
-      console.log('가장 위');
-      // 데이터 추가 로딩
-      setSize((prevSize) => prevSize + 1).then(() => {});
-    }
-  }, []);
+  const onScroll = useCallback(
+    (values) => {
+      if (values.scrollTop === 0 && !isReachingEnd) {
+        console.log('가장 위');
+        // 데이터 추가 로딩
+        setSize((prevSize) => prevSize + 1).then(() => {});
+      }
+    },
+    [isReachingEnd, setSize],
+  );
 
   return (
     <ChatZone>
-      <Scrollbars autoHide ref={ref} onScrollFrame={onScroll}>
+      <Scrollbars autoHide ref={scrollRef} onScrollFrame={onScroll}>
         {Object.entries(chatSections).map(([date, chats]) => {
           return (
             <Section className={`section-${date}`} key={date}>
