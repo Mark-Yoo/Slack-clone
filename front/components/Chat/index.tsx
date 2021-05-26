@@ -11,7 +11,7 @@ interface Props {
   data: IDM;
 }
 
-const Chat: VFC<Props> = ({ key, data }) => {
+const Chat: VFC<Props> = ({ data }) => {
   const { workspace } = useParams<{ workspace: string; channel: string }>();
   const user = data.Sender;
 
