@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useCallback, useRef, useEffect } from 'react';
 import gravatar from 'gravatar';
 import useSWR, { useSWRInfinite } from 'swr';
 import { useParams } from 'react-router';
@@ -29,22 +29,41 @@ const DirectMessage: FC = () => {
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      console.log('press enter to send!');
-      setChat('');
-      if (chat?.trim()) {
+      if (chat?.trim() && chatData) {
+        mutateChat((prevChatData) => {
+          prevChatData?.[0].unshift({
+            id: (chatData[0][0]?.id || 0) + 1,
+            content: chat,
+            SenderId: myData.id,
+            Sender: myData,
+            ReceiverId: userData.id,
+            Receiver: userData,
+            createdAt: new Date(),
+          });
+          return prevChatData;
+        }).then(() => {
+          setChat('');
+          scrollbarRef.current?.scrollToBottom();
+        });
         axios
           .post(`/api/workspaces/${workspace}/dms/${id}/chats`, {
             content: chat,
           })
           .then(() => {
             revalidateChat();
-            setChat('');
           })
           .catch(console.error);
       }
     },
-    [chat],
+    [chat, chatData],
   );
+
+  // 로딩 할 때에 스크롤이 맨 아래를 향하도록 함
+  useEffect(() => {
+    if (chatData?.length === 1) {
+      scrollbarRef.current?.scrollToBottom();
+    }
+  }, [chatData]);
 
   if (!userData || !myData) {
     return null;
