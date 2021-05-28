@@ -1,4 +1,4 @@
-import React, { useCallback, forwardRef, VFC } from 'react';
+import React, { useCallback, forwardRef, VFC, MutableRefObject } from 'react';
 import Chat from '@components/Chat';
 import { ChatZone, Section, StickyHeader } from '@components/ChatList/styles';
 import { IDM } from '@typings/db';
@@ -16,12 +16,16 @@ const ChatList = forwardRef<Scrollbars, Props>(({ chatSections, setSize, isReach
   const onScroll = useCallback(
     (values) => {
       if (values.scrollTop === 0 && !isReachingEnd) {
-        console.log('가장 위');
         // 데이터 추가 로딩
-        setSize((prevSize) => prevSize + 1).then(() => {});
+        setSize((prevSize) => prevSize + 1).then(() => {
+          const current = (scrollRef as MutableRefObject<Scrollbars>)?.current;
+          if (current) {
+            current?.scrollTop(current?.getScrollHeight() - values.scrollHeight);
+          }
+        });
       }
     },
-    [isReachingEnd, setSize],
+    [scrollRef, isReachingEnd, setSize],
   );
 
   return (
