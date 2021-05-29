@@ -11,6 +11,7 @@ import axios from 'axios';
 import { IDM } from '@typings/db';
 import makeSection from '@utils/makesection';
 import { Scrollbars } from 'react-custom-scrollbars';
+import useSocket from '@hooks/useSocket';
 
 const DirectMessage: FC = () => {
   const [chat, onChangeChat, setChat] = useInput('');
@@ -23,6 +24,7 @@ const DirectMessage: FC = () => {
     fetcher,
   );
 
+  const [socket] = useSocket(workspace);
   const isEmpty = chatData?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (chatData && chatData[chatData.length - 1]?.length < 20) || false;
   const scrollbarRef = useRef<Scrollbars>(null);
@@ -55,8 +57,17 @@ const DirectMessage: FC = () => {
           .catch(console.error);
       }
     },
-    [chat, chatData],
+    [chat, chatData, myData, userData, workspace, id],
   );
+
+  const onMessage = useCallback((data: IDM) => {}, []);
+
+  useEffect(() => {
+    socket?.on('dm', onMessage);
+    return () => {
+      socket?.off('dm', onMessage);
+    };
+  }, [socket, onMessage]);
 
   // 로딩 할 때에 스크롤이 맨 아래를 향하도록 함
   useEffect(() => {
