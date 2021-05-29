@@ -60,7 +60,24 @@ const DirectMessage: FC = () => {
     [chat, chatData, myData, userData, workspace, id],
   );
 
-  const onMessage = useCallback((data: IDM) => {}, []);
+  const onMessage = useCallback((data: IDM) => {
+    if (data.SenderId === Number(id) && myData.id !== Number(id)) {
+      mutateChat((chatData) => {
+        chatData?.[0].unshift(data);
+        return chatData;
+      }, false).then(() => {
+        if (scrollbarRef.current) {
+          if (
+            scrollbarRef.current.getScrollHeight() <
+            scrollbarRef.current.getClientHeight() + scrollbarRef.current.getScrollTop() + 150
+          ) {
+            console.log('scrollToBottom', scrollbarRef.current?.getValues());
+            scrollbarRef.current.scrollToBottom();
+          }
+        }
+      });
+    }
+  }, []);
 
   useEffect(() => {
     socket?.on('dm', onMessage);
