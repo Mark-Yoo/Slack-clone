@@ -72,7 +72,9 @@ const DirectMessage: FC = () => {
             scrollbarRef.current.getClientHeight() + scrollbarRef.current.getScrollTop() + 150
           ) {
             console.log('scrollToBottom', scrollbarRef.current?.getValues());
-            scrollbarRef.current.scrollToBottom();
+            setTimeout(() => {
+              scrollbarRef.current?.scrollToBottom();
+            }, 50);
           }
         }
       });
