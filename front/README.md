@@ -105,5 +105,8 @@ const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher�
 
 - 일반 ref로도 가능
 
+## Webpack-bundle-analyzer
 
+- 각 컴포넌트와 요소들의 용량을 체크하기 위한 플러그인
 
+  
