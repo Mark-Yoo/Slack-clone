@@ -109,4 +109,6 @@ const { data, error, revalidate, mutate } = useSWR('http://api주소', fetcher�
 
 - 각 컴포넌트와 요소들의 용량을 체크하기 위한 플러그인
 
-  
+## Tree-shaking
+
+- webpack에서 현재 필요없는 부분까지 불러오기 위해서 (ex. 이미지) 데이터를 사용하는 경우 app.js 자체의 용량을 줄이기 위해서 필요없는 부분들을 덜어내는 작업
