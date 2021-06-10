@@ -69,7 +69,7 @@ const Channel: FC = () => {
 
   const onMessage = useCallback(
     (data: IChat) => {
-      if (data.Channel.name === channel && data.UserId !== myData?.id) {
+      if ((data.Channel.name === channel && data.content.startsWith('uploads\\')) || data.UserId !== myData?.id) {
         mutateChat((chatData) => {
           chatData?.[0].unshift(data);
           return chatData;
@@ -113,15 +113,44 @@ const Channel: FC = () => {
     setShowInviteChannelModal(false);
   }, []);
 
+  const onDrop = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(e);
+      const formData = new FormData();
+      if (e.dataTransfer.items) {
+        for (let i = 0; i < e.dataTransfer.items.length; i++) {
+          if (e.dataTransfer.items[i].kind === 'file') {
+            const file = e.dataTransfer.items[i].getAsFile();
+            console.log('...file[' + i + '].name = ' + file.name);
+            formData.append('image', file);
+          }
+        }
+      } else {
+        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+          console.log(e, '... file[' + i + '].name' + e.dataTransfer.files[i].name);
+          formData.append('image', e.dataTransfer.files[i]);
+        }
+      }
+      axios.post(`/api/workspaces/${workspace}/channels/${channel}/images`, formData).then(() => {
+        setDragOver(false);
+        localStorage.setItem(`${workspace}-${channel}`, new Date().getTime().toString());
+      });
+    },
+    [workspace, channel],
+  );
+
+  const onDragOver = useCallback((e) => {
+    e.preventDefault();
+    console.log(e);
+    setDragOver(true);
+  }, []);
+
   if (!myData) {
     return null;
   }
 
   const chatSections = makeSection(chatData ? chatData?.flat().reverse() : []);
-
-  const onDrop = useCallback(() => {}, []);
-
-  const onDragOver = useCallback(() => {}, []);
 
   return (
     <Container onDrop={onDrop} onDragOver={onDragOver}>
