@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import ChatList from '@components/ChatList';
 import ChatBox from '@components/ChatBox';
 import useInput from '@hooks/useInput';
-import { Header, Container } from '@pages/Channel/styles';
+import { Header, Container, DragOver } from '@pages/Channel/styles';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import useSWR, { useSWRInfinite } from 'swr';
@@ -33,6 +33,8 @@ const Channel: FC = () => {
   const isReachingEnd = isEmpty || (chatData && chatData[chatData.length - 1]?.length < 20) || false;
   const scrollbarRef = useRef<Scrollbars>(null);
   const [showInviteChannelModal, setShowInviteChannelModal] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
@@ -117,8 +119,12 @@ const Channel: FC = () => {
 
   const chatSections = makeSection(chatData ? chatData?.flat().reverse() : []);
 
+  const onDrop = useCallback(() => {}, []);
+
+  const onDragOver = useCallback(() => {}, []);
+
   return (
-    <Container>
+    <Container onDrop={onDrop} onDragOver={onDragOver}>
       <Header>
         <span>#{channel}</span>
         <div className="header-right">
@@ -147,6 +153,7 @@ const Channel: FC = () => {
         onCloseModal={onCloseModal}
         setShowInviteChannelModal={setShowInviteChannelModal}
       />
+      {dragOver && <DragOver>이미지 업로드</DragOver>}
     </Container>
   );
 };
